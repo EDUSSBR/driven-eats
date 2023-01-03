@@ -1,0 +1,66 @@
+:root {
+	--white: #ffffff;
+	--black: black;
+	--red: #CF2B2B;
+	--green: rgba(50,183,47,1);
+	--background-gray: #E5E5E5;
+	--titles-gray: #333333;
+	--description-gray: #A6A6A6;
+	--button-bg: #cbcbcb;
+}
+
+body {
+	background-color: var(--background-gray);
+}
+header {
+	background-color: var(--red);
+}
+footer{
+	background-color: var(--white);
+}
+h1 {
+	color: var(--white);
+}
+
+header p {
+	color: var(--white);
+}
+
+h2 {
+	color: var(--titles-gray);
+}
+
+.list-item {
+	background-color: var(--white);
+}
+
+.list-item h3 {
+	color: var(--titles-gray);
+
+}
+
+.list-item p:last-child {
+	color: var(--black)
+}
+
+.list-item p {
+	color: var(--description-gray);
+}
+
+button:disabled {
+	color: var(--white);
+	background-color: var(--button-bg);
+	border: 0px solid var(--button-bg);
+}
+
+button {
+	color: var(--white);
+	background-color: var(--green);
+	border: 0px solid var(--green);
+}
+
+
+ion-icon {
+	display: none;
+    color:var(--green);
+}

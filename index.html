@@ -1,12 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DrivenEats</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Roboto:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="fonts.css">
+    <link rel="stylesheet" href="colors.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    
+    <header>
+        <h1>DrivenEats</h1>
+        <p>Sua comida em 6 minutos</p>
+    </header>
+    <main>
+        <section>
+            <h2> Primeiro, seu prato</h2>
+            <div id='food' class="list-container">
+                <div class="list-item">
+                    <img src="./imgs/nigiri.jpg" alt="">
+                    <h3>Combo nigiri</h3>
+                    <p>8 hossomakis</p>
+                    <p>10 nigiris sortidos</p>
+                    <div class="price-container">
+                        <p>R$ 35,90</p>
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <img src="./imgs/sashimi.jpg" alt="">
+                    <h3>Combo Frutos</h3>
+                    <p>Polvo e Salmão</p>
+                    <p>Cozidos com ostras</p>
+                    <div class="price-container">
+                        <p>R$ 27,00</p>
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <img src="./imgs/combinado.jpg" alt="">
+                    <h3>Combo Hot</h3>
+                    <p>Hot filadelphia</p>
+                    <p>Sushis e Sashimis</p>
+                    <div class="price-container">
+                        <p>R$ 18,00</p>
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <img src="./imgs/jhow.jpg" alt="">
+                    <h3>Combo Jow</h3>
+                    <p>8 unidades Jow</p>
+                    <p>Salada com camarão</p>
+
+                    <div class="price-container">
+                        <p>R$ 14,90</p>
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h2> Agora, sua bebida</h2>
+            <div id='drink' class="list-container">
+                <div class="list-item">
+                    <img src="./imgs/chaverde.jpg" alt="">
+                    <h3>Chá verde</h3>
+                    <p>Camellia sinensis </p>
+                    <p>Infusão da erva</p>
+
+                    <div class="price-container">
+                        <p>R$ 6,00</p>
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <img src="./imgs/sake.jpg" alt="">
+                    <h3>Sake Saborizado</h3>
+                    <p>2 Doses de Saque</p>
+                    <p>Charope Monin</p>
+                    <div class="price-container">
+                        <p>R$ 12,90</p>
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <img src="./imgs/sauvignon.jpg" alt="">
+                    <h3>Sauvignon Japonês</h3>
+                    <p>Servido Puro</p>
+                    <p>Dose ou Garrafa</p>
+
+                    <div class="price-container">
+                        <p>R$ 39,00</p>
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h2> Por fim, sua sobremesa</h2>
+            <div id='dessert' class="list-container">
+                <div class="list-item">
+                    <img src="./imgs/cheesecakecereja.jpg" alt="">
+                    <h3>Cheese Cake</h3>
+                    <p>Queijo Japonês</p>
+                    <p>com Cerejas</p>
+
+                    <div class="price-container">
+                        <p>R$ 17,90</p>
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <img src="./imgs/macaroons.jpg" alt="">
+                    <h3>Macaroons</h3>
+                    <p>Sabores variados</p>
+                    <p>Creme de baunilha</p>
+
+                    <div class="price-container">
+                        <p>R$ 8,50</p>
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                    </div>
+                </div>
+                <div class="list-item">
+                    <img src="./imgs/torta-chocolate.jpg" alt="">
+                    <h3>Torta de Chocolate</h3>
+                    <p>Chocolate com calda</p>
+                    <p>de morango</p>
+
+                    <div class="price-container">
+                        <p>R$ 20,90</p>
+                        <ion-icon name="checkmark-circle"></ion-icon>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <button data-test='order-btn' disabled onclick='sendOrder();'>
+            Seleciona os 3 itens <br /> para fechar o pedido
+        </button>
+    </footer>
+
+    <div id='modalBg' class="ModalBackground hideModal" onclick='closeModal();'> </div>
+    <div data-test="confirm-order-modal" id='modalBox' class="ModalBox hideModal">
+        <h4>Confirme seu pedido</h4>
+        <div class="order-container">
+            <p class="order-item">
+                <span id='foodItem'></span>
+                <span id='foodPrice'></span>
+            </p>
+            <p class="order-item"><span id='drinkItem'></span> <span id='drinkPrice'></span></p>
+            <p class="order-item"><span id='dessertItem'></span> <span id='dessertPrice'></span></p>
+            <p class="order-item"><span>Total</span> <span id='totalPrice'></span></p>
+        </div>
+        <button data-test="confirm-order-btn" onclick='sendWhatsAppMsg();'>Tudo certo, pode pedir!</button>
+        <button data-test="cancel-order-btn" onclick='closeModal();'>Cancelar</button>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>
