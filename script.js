@@ -42,7 +42,17 @@ const view = {
     },
     $toggleDessertState: function toggleDessertState(id) {
         this.items.dessert[id].classList.toggle("checked");
-    }
+    },
+    $activateButton: function $activateButton() {
+        document.querySelector("button").removeAttribute('disabled');
+    },
+    $checkButtonStatus: function $checkButtonStatus() {
+        let disabledButton = document.querySelector("button:disabled");
+        return !!disabledButton
+    },
+    $setNewTextToButton: function $setNewTextToButton() {
+        document.querySelector("button").innerText = "Fechar Pedido";
+    },
 }
 
 
@@ -78,6 +88,19 @@ const model = {
         this.items.dessert[id].classList.remove("checked");
         this.selectedItemsID.dessert = null;
     },
+    checkAllStatesForButtonActivation: function checkAllStatesForButtonActivation() {
+        let i = 0;
+        for (let item in this.selectedItemsID) {
+            if (this.selectedItemsID[item] === null) return;
+            if (this.selectedItemsID[item]) {
+                i++;
+            }
+        }
+        if ((i === 3) && (this.$checkButtonStatus())) {
+            this.$activateButton();
+            this.$setNewTextToButton();
+        }
+    }
 }
 
 Object.assign(model, view);
@@ -95,6 +118,7 @@ function toggleFood(e) {
         controller.clearCheckedFood(oldID);
     }
     controller.setFoodId(id);
+    controller.checkAllStatesForButtonActivation()
 }
 //usar uma classe pra selecionar  o drink food e dessert e deixá-los na mesma fun
 function toggleDrink(e) {
@@ -105,6 +129,7 @@ function toggleDrink(e) {
         controller.clearCheckedDrink(oldID);
     }
     controller.setDrinkId(id);
+    controller.checkAllStatesForButtonActivation()
 }
 
 function toggleDessert(e) {
@@ -115,4 +140,5 @@ function toggleDessert(e) {
         controller.clearCheckedDessert(oldID);
     }
     controller.setDessertId(id);
+    controller.checkAllStatesForButtonActivation()
 }
