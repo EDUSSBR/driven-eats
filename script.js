@@ -7,6 +7,9 @@ const view = {
         this.items.drink = document.querySelectorAll("#drink .list-item");
 
     },
+    $getDesserts: function $getDesserts() {
+        this.items.dessert = document.querySelectorAll("#dessert .list-item");
+    },
     $setupListenersAndIds: function $setupListenersAndIds() {
         for (let i in [...this.items.food]) {
             this.items.food[i].setAttribute('id', i);
@@ -23,7 +26,13 @@ const view = {
             this.items.drink[i].querySelector('.price-container p').setAttribute('data-test', 'item-price');
             this.items.drink[i].addEventListener('click', toggleDrink);
         }
-
+        for (let i in [...this.items.dessert]) {
+            this.items.dessert[i].setAttribute('id', i);
+            this.items.dessert[i].setAttribute('data-test', 'dessert');
+            this.items.dessert[i].querySelector('h3').setAttribute('data-test', 'item-name');
+            this.items.dessert[i].querySelector('.price-container p').setAttribute('data-test', 'item-price');
+            this.items.dessert[i].addEventListener('click', toggleDessert);
+        }
     },
     $toggleFoodState: function toggleFoodState(id) {
         this.items.food[id].classList.toggle("checked");
@@ -31,6 +40,9 @@ const view = {
     $toggleDrinkState: function toggleDrinkState(id) {
         this.items.drink[id].classList.toggle("checked");
     },
+    $toggleDessertState: function toggleDessertState(id) {
+        this.items.dessert[id].classList.toggle("checked");
+    }
 }
 
 
@@ -39,6 +51,7 @@ const model = {
     setupItems: function setupItems() {
         this.$getFood();
         this.$getDrink();
+        this.$getDesserts();
         this.$setupListenersAndIds();
     },
     setFoodId: function setFoodId(id) {
@@ -49,6 +62,10 @@ const model = {
         this.selectedItemsID.drink = id;
         this.$toggleDrinkState(id);
     },
+    setDessertId: function setDessertId(id) {
+        this.selectedItemsID.dessert = id;
+        this.$toggleDessertState(id);
+    },
     clearCheckedFood: function clearCheckedFood(id) {
         this.items.food[id].classList.remove("checked");
         this.selectedItemsID.food = null;
@@ -56,6 +73,10 @@ const model = {
     clearCheckedDrink: function clearCheckedDrink(id) {
         this.items.drink[id].classList.remove("checked");
         this.selectedItemsID.drink = null;
+    },
+    clearCheckedDessert: function clearCheckedDessert(id) {
+        this.items.dessert[id].classList.remove("checked");
+        this.selectedItemsID.dessert = null;
     },
 }
 
@@ -86,3 +107,12 @@ function toggleDrink(e) {
     controller.setDrinkId(id);
 }
 
+function toggleDessert(e) {
+    const { id } = e.currentTarget;
+    const oldID = controller.selectedItemsID.dessert;
+    if (oldID === id) return;
+    if (oldID !== null) {
+        controller.clearCheckedDessert(oldID);
+    }
+    controller.setDessertId(id);
+}
