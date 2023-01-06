@@ -193,8 +193,11 @@ h4 {
         flex-direction: column;
 
     }
+    footer button:disabled:hover{
+        background-color: #cbcbcb;
+    }
     footer button:hover{
-        background-color: rgba(50, 183, 47, 0.8);;
+        background-color: rgba(50, 183, 47, 0.8);
     }
     .list-container {
         overflow-x: hidden;
