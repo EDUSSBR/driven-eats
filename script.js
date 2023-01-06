@@ -53,6 +53,9 @@ const view = {
     $setNewTextToButton: function $setNewTextToButton() {
         document.querySelector("button").innerText = "Fechar Pedido";
     },
+    $setInnerText: function $setInnerText(id, text) {
+        document.getElementById(id).innerText = text
+    }
 }
 
 
@@ -100,7 +103,57 @@ const model = {
             this.$activateButton();
             this.$setNewTextToButton();
         }
-    }
+    },
+    $openModal: function openModal() {
+        document.getElementById("modalBg").classList.remove('hideModal');
+        document.getElementById("modalBox").classList.remove('hideModal');
+    },
+    setupModal: function setupModal() {
+        let food = this.$getFoodName()
+        let foodPrice = this.$getFoodPrice()
+        let drink = this.$getDrinkName()
+        let drinkPrice = this.$getDrinkPrice()
+        let dessert = this.$getDessertName()
+        let dessertPrice = this.$getDessertPrice()
+        let total = Number(foodPrice.split(',').join('.')) + Number(drinkPrice.split(',').join('.')) + Number(dessertPrice.split(',').join('.'))
+
+        this.$setInnerText('foodItem', food)
+        this.$setInnerText('drinkItem', drink)
+        this.$setInnerText('dessertItem', dessert)
+        this.$setInnerText('foodPrice', foodPrice)
+        this.$setInnerText('drinkPrice', drinkPrice)
+        this.$setInnerText('dessertPrice', dessertPrice)
+
+        this.$setInnerText('totalPrice', this.formatNumber(total))
+        // 'R$ ' +total.toFixed(2).split('.').join(',')
+        this.$openModal()
+
+    },
+    $getFoodPrice: function $getFoodPrice() {
+        // console.log(this.items.food[this.selectedItemsID.food].querySelector('.price-container p'))
+        return this.items.food[this.selectedItemsID.food].querySelector('.price-container p').innerText.split(" ")[1];
+    },
+    $getDrinkPrice: function $getDrinkPrice() {
+        return this.items.drink[this.selectedItemsID.drink].querySelector('.price-container p').innerText.split(" ")[1];
+    },
+    $getDessertPrice: function $getDessertPrice() {
+        return this.items.dessert[this.selectedItemsID.dessert].querySelector('.price-container p').innerText.split(" ")[1];
+    },
+    $getFoodName: function $getFoodName() {
+        return this.items.food[this.selectedItemsID.food].querySelector('h3').innerText
+    },
+    $getDrinkName: function $getDrinkName() {
+        return this.items.drink[this.selectedItemsID.drink].querySelector('h3').innerText
+    },
+    $getDessertName: function $getDessertName() {
+        return this.items.dessert[this.selectedItemsID.dessert].querySelector('h3').innerText
+    },
+    $getTotalPriceElement: function $getTotalPriceElement() {
+        return document.querySelector("#totalPrice").innerText
+    },
+    formatNumber: function formatNumber(number) {
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(number)
+    },
 }
 
 Object.assign(model, view);
@@ -141,4 +194,8 @@ function toggleDessert(e) {
     }
     controller.setDessertId(id);
     controller.checkAllStatesForButtonActivation()
+}
+
+function sendOrder(e) {
+    controller.setupModal()  
 }
