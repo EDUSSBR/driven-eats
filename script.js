@@ -161,6 +161,26 @@ const model = {
     setNameAndAddres: function setNameAndAddres(name, address) {
         this.name = name
         this.address = address
+    },
+    getSendOrderMessage: function getSendOrderMessage() {
+        // https://wa.me/5548988608144?text=urlencodedtext
+        let food = this.$getFoodName()
+        let foodPrice = this.$getFoodPrice()
+        let drink = this.$getDrinkName()
+        let drinkPrice = this.$getDrinkPrice()
+        let dessert = this.$getDessertName()
+        let dessertPrice = this.$getDessertPrice()
+        let total = Number(foodPrice.split(',').join('.')) + Number(drinkPrice.split(',').join('.')) + Number(dessertPrice.split(',').join('.'))
+
+        let message = `Olá, gostaria de fazer o pedido:
+- Prato: ${food}
+- Bebida: ${drink}
+- Sobremesa: ${dessert}
+Total: ${this.formatNumber(total)}
+    
+Nome: ${this.name}
+Endereço: ${this.address}`
+        return `https://wa.me/5548988080753?text=${encodeURIComponent(message)}`
     }
 }
 
@@ -217,4 +237,9 @@ function sendOrder(e) {
 
 function closeModal() {
     controller.$closeModal()
+}
+
+function sendWhatsAppMsg() {
+    const {name, address} = controller
+    window.location.href = controller.getSendOrderMessage(name, address)
 }
