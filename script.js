@@ -108,6 +108,10 @@ const model = {
         document.getElementById("modalBg").classList.remove('hideModal');
         document.getElementById("modalBox").classList.remove('hideModal');
     },
+    $closeModal: function closeModal() {
+        document.getElementById("modalBg").classList.add('hideModal');
+        document.getElementById("modalBox").classList.add('hideModal');
+    },
     setupModal: function setupModal() {
         let food = this.$getFoodName()
         let foodPrice = this.$getFoodPrice()
@@ -202,7 +206,15 @@ function toggleDessert(e) {
 
 function sendOrder(e) {
     controller.setupModal()
-    let nome = prompt("Por favor, digite seu nome.")
-    let address = prompt("Por favor, digite seu endereço.")
-    controller.setNameAndAddres(nome, address)
+    let nome;
+    let addres;
+    if (!controller.name || !controller.address) {
+        nome = prompt("Por favor, digite seu nome.")
+        address = prompt("Por favor, digite seu endereço.")
+        controller.setNameAndAddres(nome, address)
+    }
+}
+
+function closeModal() {
+    controller.$closeModal()
 }
