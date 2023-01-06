@@ -154,6 +154,10 @@ const model = {
     formatNumber: function formatNumber(number) {
         return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(number)
     },
+    setNameAndAddres: function setNameAndAddres(name, address) {
+        this.name = name
+        this.address = address
+    }
 }
 
 Object.assign(model, view);
@@ -197,5 +201,8 @@ function toggleDessert(e) {
 }
 
 function sendOrder(e) {
-    controller.setupModal()  
+    controller.setupModal()
+    let nome = prompt("Por favor, digite seu nome.")
+    let address = prompt("Por favor, digite seu endereço.")
+    controller.setNameAndAddres(nome, address)
 }
