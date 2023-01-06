@@ -3,6 +3,10 @@ const view = {
         this.items.food = document.querySelectorAll("#food .list-item");
 
     },
+    $getDrink: function $getDrink() {
+        this.items.drink = document.querySelectorAll("#drink .list-item");
+
+    },
     $setupListenersAndIds: function $setupListenersAndIds() {
         for (let i in [...this.items.food]) {
             this.items.food[i].setAttribute('id', i);
@@ -12,10 +16,20 @@ const view = {
 
             this.items.food[i].addEventListener('click', toggleFood);
         }
+        for (let i in [...this.items.drink]) {
+            this.items.drink[i].setAttribute('id', i);
+            this.items.drink[i].setAttribute('data-test', 'drink');
+            this.items.drink[i].querySelector('h3').setAttribute('data-test', 'item-name');
+            this.items.drink[i].querySelector('.price-container p').setAttribute('data-test', 'item-price');
+            this.items.drink[i].addEventListener('click', toggleDrink);
+        }
 
     },
     $toggleFoodState: function toggleFoodState(id) {
         this.items.food[id].classList.toggle("checked");
+    },
+    $toggleDrinkState: function toggleDrinkState(id) {
+        this.items.drink[id].classList.toggle("checked");
     },
 }
 
@@ -24,15 +38,24 @@ const view = {
 const model = {
     setupItems: function setupItems() {
         this.$getFood();
+        this.$getDrink();
         this.$setupListenersAndIds();
     },
     setFoodId: function setFoodId(id) {
         this.selectedItemsID.food = id;
         this.$toggleFoodState(id);
     },
+    setDrinkId: function setDrinkId(id) {
+        this.selectedItemsID.drink = id;
+        this.$toggleDrinkState(id);
+    },
     clearCheckedFood: function clearCheckedFood(id) {
         this.items.food[id].classList.remove("checked");
         this.selectedItemsID.food = null;
+    },
+    clearCheckedDrink: function clearCheckedDrink(id) {
+        this.items.drink[id].classList.remove("checked");
+        this.selectedItemsID.drink = null;
     },
 }
 
@@ -53,5 +76,13 @@ function toggleFood(e) {
     controller.setFoodId(id);
 }
 //usar uma classe pra selecionar  o drink food e dessert e deixá-los na mesma fun
-
+function toggleDrink(e) {
+    const { id } = e.currentTarget;
+    const oldID = controller.selectedItemsID.drink;
+    if (oldID === id) return;
+    if (oldID !== null) {
+        controller.clearCheckedDrink(oldID);
+    }
+    controller.setDrinkId(id);
+}
 
