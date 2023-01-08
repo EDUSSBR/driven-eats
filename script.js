@@ -82,9 +82,7 @@ const model = {
         document.getElementById("modalBox").classList.add('hideModal');
     },
     setupModal: function setupModal() {
-        const [foodPrice, drinkPrice, dessertPrice] = this.types.map(item => this.getItemsPrice(item));
-        const [food, drink, dessert] = this.types.map(item => this.getItemName(item));
-        const total = Number(foodPrice.split(',').join('.')) + Number(drinkPrice.split(',').join('.')) + Number(dessertPrice.split(',').join('.'));
+        const { foodPrice, drinkPrice, dessertPrice, food, drink, dessert, total } = this.returnOrderItems();
         this.setInnerText('foodItem', food);
         this.setInnerText('drinkItem', drink);
         this.setInnerText('dessertItem', dessert);
@@ -110,10 +108,14 @@ const model = {
         this.name = name;
         this.address = address;
     },
-    getSendOrderMessage: function getSendOrderMessage() {
+    returnOrderItems() {
         const [foodPrice, drinkPrice, dessertPrice] = this.types.map(item => this.getItemsPrice(item));
         const [food, drink, dessert] = this.types.map(item => this.getItemName(item));
         const total = Number(foodPrice.split(',').join('.')) + Number(drinkPrice.split(',').join('.')) + Number(dessertPrice.split(',').join('.'));
+        return { foodPrice, drinkPrice, dessertPrice, food, drink, dessert, total };
+    },
+    getSendOrderMessage: function getSendOrderMessage() {
+        const { food, drink, dessert, total } = this.returnOrderItems();
         const message = `Olá, gostaria de fazer o pedido:
 - Prato: ${food}
 - Bebida: ${drink}
