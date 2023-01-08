@@ -1,47 +1,10 @@
 const view = {
-    $getFood: function $getFood() {
-        this.items.food = document.querySelectorAll("#food .list-item");
-
+    $getItemsByID: function $getItems(id) {
+        let typeOfItem = id.replace('#', '')
+        this.items[typeOfItem] = document.querySelectorAll(`${id} .list-item`);
     },
-    $getDrink: function $getDrink() {
-        this.items.drink = document.querySelectorAll("#drink .list-item");
-
-    },
-    $getDesserts: function $getDesserts() {
-        this.items.dessert = document.querySelectorAll("#dessert .list-item");
-    },
-    $setupListenersAndIds: function $setupListenersAndIds() {
-        for (let i in [...this.items.food]) {
-            this.items.food[i].setAttribute('id', i);
-            this.items.food[i].setAttribute('data-test', 'dish');
-            this.items.food[i].querySelector('h3').setAttribute('data-test', 'item-name');
-            this.items.food[i].querySelector('.price-container p').setAttribute('data-test', 'item-price');
-
-            this.items.food[i].addEventListener('click', toggleFood);
-        }
-        for (let i in [...this.items.drink]) {
-            this.items.drink[i].setAttribute('id', i);
-            this.items.drink[i].setAttribute('data-test', 'drink');
-            this.items.drink[i].querySelector('h3').setAttribute('data-test', 'item-name');
-            this.items.drink[i].querySelector('.price-container p').setAttribute('data-test', 'item-price');
-            this.items.drink[i].addEventListener('click', toggleDrink);
-        }
-        for (let i in [...this.items.dessert]) {
-            this.items.dessert[i].setAttribute('id', i);
-            this.items.dessert[i].setAttribute('data-test', 'dessert');
-            this.items.dessert[i].querySelector('h3').setAttribute('data-test', 'item-name');
-            this.items.dessert[i].querySelector('.price-container p').setAttribute('data-test', 'item-price');
-            this.items.dessert[i].addEventListener('click', toggleDessert);
-        }
-    },
-    $toggleFoodState: function toggleFoodState(id) {
-        this.items.food[id].classList.toggle("checked");
-    },
-    $toggleDrinkState: function toggleDrinkState(id) {
-        this.items.drink[id].classList.toggle("checked");
-    },
-    $toggleDessertState: function toggleDessertState(id) {
-        this.items.dessert[id].classList.toggle("checked");
+    $toggleItemState: function $toggleItemState(itemType, id) {
+        this.items[itemType][id].classList.toggle('checked')
     },
     $activateButton: function $activateButton() {
         document.querySelector("button").removeAttribute('disabled');
@@ -55,41 +18,38 @@ const view = {
     },
     $setInnerText: function $setInnerText(id, text) {
         document.getElementById(id).innerText = text
+    },
+    $setupControllerState: function $setupControllerState() {
+        for (let item of this.types) {
+            for (let i in [...this.items[item]]) {
+                this.items[item][i].setAttribute('id', i);
+                this.items[item][i].setAttribute('data-test', 'dish');
+                this.items[item][i].querySelector('h3').setAttribute('data-test', 'item-name');
+                this.items[item][i].querySelector('.price-container p').setAttribute('data-test', 'item-price');
+                let firstItem = document.querySelectorAll(`#${item} .point-item`)
+                if (firstItem.length === 1) {
+                    firstItem[0].classList.add('point-active-food')
+                }
+            }
+        }
     }
 }
-
-
-
 const model = {
     setupItems: function setupItems() {
-        this.$getFood();
-        this.$getDrink();
-        this.$getDesserts();
-        this.$setupListenersAndIds();
+        console.log(this)
+        for (let item of this.types) {
+            this.$getItemsByID(`#${item}`);
+        }
+        this.$setupControllerState();
+        this.$setupClickEvents()
     },
-    setFoodId: function setFoodId(id) {
-        this.selectedItemsID.food = id;
-        this.$toggleFoodState(id);
+    setItemId: function setItemId(itemType, id) {
+        this.selectedItemsID[itemType] = id;
+        this.$toggleItemState(itemType, id);
     },
-    setDrinkId: function setDrinkId(id) {
-        this.selectedItemsID.drink = id;
-        this.$toggleDrinkState(id);
-    },
-    setDessertId: function setDessertId(id) {
-        this.selectedItemsID.dessert = id;
-        this.$toggleDessertState(id);
-    },
-    clearCheckedFood: function clearCheckedFood(id) {
-        this.items.food[id].classList.remove("checked");
-        this.selectedItemsID.food = null;
-    },
-    clearCheckedDrink: function clearCheckedDrink(id) {
-        this.items.drink[id].classList.remove("checked");
-        this.selectedItemsID.drink = null;
-    },
-    clearCheckedDessert: function clearCheckedDessert(id) {
-        this.items.dessert[id].classList.remove("checked");
-        this.selectedItemsID.dessert = null;
+    clearCheckedItem: function clearCheckedItem(itemType, id) {
+        this.items[itemType][id].classList.remove("checked");
+        this.selectedItemsID[itemType] = null;
     },
     checkAllStatesForButtonActivation: function checkAllStatesForButtonActivation() {
         let i = 0;
@@ -113,44 +73,23 @@ const model = {
         document.getElementById("modalBox").classList.add('hideModal');
     },
     setupModal: function setupModal() {
-        let food = this.$getFoodName()
-        let foodPrice = this.$getFoodPrice()
-        let drink = this.$getDrinkName()
-        let drinkPrice = this.$getDrinkPrice()
-        let dessert = this.$getDessertName()
-        let dessertPrice = this.$getDessertPrice()
+        const [foodPrice, drinkPrice, dessertPrice] = this.types.map(item => this.$getItemsPrice(item))
+        const [food, drink, dessert] = this.types.map(item => this.$getItemName(item))
         let total = Number(foodPrice.split(',').join('.')) + Number(drinkPrice.split(',').join('.')) + Number(dessertPrice.split(',').join('.'))
-
         this.$setInnerText('foodItem', food)
         this.$setInnerText('drinkItem', drink)
         this.$setInnerText('dessertItem', dessert)
         this.$setInnerText('foodPrice', foodPrice)
         this.$setInnerText('drinkPrice', drinkPrice)
         this.$setInnerText('dessertPrice', dessertPrice)
-
         this.$setInnerText('totalPrice', this.formatNumber(total))
-        // 'R$ ' +total.toFixed(2).split('.').join(',')
         this.$openModal()
-
     },
-    $getFoodPrice: function $getFoodPrice() {
-        // console.log(this.items.food[this.selectedItemsID.food].querySelector('.price-container p'))
-        return this.items.food[this.selectedItemsID.food].querySelector('.price-container p').innerText.split(" ")[1];
+    $getItemsPrice: function $getItemPrice(itemType) {
+        return this.items[itemType][this.selectedItemsID[itemType]].querySelector('.price-container p').innerText.split(" ")[1]
     },
-    $getDrinkPrice: function $getDrinkPrice() {
-        return this.items.drink[this.selectedItemsID.drink].querySelector('.price-container p').innerText.split(" ")[1];
-    },
-    $getDessertPrice: function $getDessertPrice() {
-        return this.items.dessert[this.selectedItemsID.dessert].querySelector('.price-container p').innerText.split(" ")[1];
-    },
-    $getFoodName: function $getFoodName() {
-        return this.items.food[this.selectedItemsID.food].querySelector('h3').innerText
-    },
-    $getDrinkName: function $getDrinkName() {
-        return this.items.drink[this.selectedItemsID.drink].querySelector('h3').innerText
-    },
-    $getDessertName: function $getDessertName() {
-        return this.items.dessert[this.selectedItemsID.dessert].querySelector('h3').innerText
+    $getItemName: function $getItemName(itemType) {
+        return this.items[itemType][this.selectedItemsID[itemType]].querySelector('h3').innerText
     },
     $getTotalPriceElement: function $getTotalPriceElement() {
         return document.querySelector("#totalPrice").innerText
@@ -163,15 +102,9 @@ const model = {
         this.address = address
     },
     getSendOrderMessage: function getSendOrderMessage() {
-        // https://wa.me/5548988608144?text=urlencodedtext
-        let food = this.$getFoodName()
-        let foodPrice = this.$getFoodPrice()
-        let drink = this.$getDrinkName()
-        let drinkPrice = this.$getDrinkPrice()
-        let dessert = this.$getDessertName()
-        let dessertPrice = this.$getDessertPrice()
+        const [foodPrice, drinkPrice, dessertPrice] = this.types.map(item => this.$getItemsPrice(item))
+        const [food, drink, dessert] = this.types.map(item => this.$getItemName(item))
         let total = Number(foodPrice.split(',').join('.')) + Number(drinkPrice.split(',').join('.')) + Number(dessertPrice.split(',').join('.'))
-
         let message = `Olá, gostaria de fazer o pedido:
 - Prato: ${food}
 - Bebida: ${drink}
@@ -183,47 +116,31 @@ Endereço: ${this.address}`
         return `https://wa.me/5548988080753?text=${encodeURIComponent(message)}`
     }
 }
-
-Object.assign(model, view);
+const itemsType = {
+    types: ['food', 'drink', 'dessert']
+}
+const eventsItems = {
+    $setupClickEvents: function $setupClickEvents() {
+        for (let type of this.types) {
+            for (let item of this.items[type]) {
+                console.log(item)
+                item.addEventListener('click', (e) => {
+                    const { id } = e.currentTarget;
+                    const oldID = this.selectedItemsID[type];
+                    if (oldID === id) return;
+                    if ((oldID !== null)) {
+                        this.clearCheckedItem(type, oldID);
+                    }
+                    this.setItemId(type, id);
+                    this.checkAllStatesForButtonActivation()
+                });
+            }
+        }
+    },
+}
+Object.assign(model, view, eventsItems, itemsType);
 const controller = Object.assign(Object.create(model), { selectedItemsID: { food: null, drink: null, dessert: null }, items: { food: {}, drink: {}, dessert: {} } });
-controller.setupItems();
-
-
-
-
-function toggleFood(e) {
-    const { id } = e.currentTarget;
-    const oldID = controller.selectedItemsID.food;
-    if (oldID === id) return;
-    if ((oldID !== null)) {
-        controller.clearCheckedFood(oldID);
-    }
-    controller.setFoodId(id);
-    controller.checkAllStatesForButtonActivation()
-}
-//usar uma classe pra selecionar  o drink food e dessert e deixá-los na mesma fun
-function toggleDrink(e) {
-    const { id } = e.currentTarget;
-    const oldID = controller.selectedItemsID.drink;
-    if (oldID === id) return;
-    if (oldID !== null) {
-        controller.clearCheckedDrink(oldID);
-    }
-    controller.setDrinkId(id);
-    controller.checkAllStatesForButtonActivation()
-}
-
-function toggleDessert(e) {
-    const { id } = e.currentTarget;
-    const oldID = controller.selectedItemsID.dessert;
-    if (oldID === id) return;
-    if (oldID !== null) {
-        controller.clearCheckedDessert(oldID);
-    }
-    controller.setDessertId(id);
-    controller.checkAllStatesForButtonActivation()
-}
-
+controller.setupItems(itemsType);
 function sendOrder(e) {
     controller.setupModal()
     let nome;
@@ -234,12 +151,10 @@ function sendOrder(e) {
         controller.setNameAndAddres(nome, address)
     }
 }
-
 function closeModal() {
     controller.$closeModal()
 }
-
 function sendWhatsAppMsg() {
-    const {name, address} = controller
+    const { name, address } = controller
     window.location.href = controller.getSendOrderMessage(name, address)
 }
