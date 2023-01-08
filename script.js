@@ -28,17 +28,17 @@ const view = {
             if (item === 'dessert') {
                 testText='dessert'
             }
-            for (let i in [...this.items[item]]) {
-                this.items[item][i].setAttribute('id', i);
-                this.items[item][i].setAttribute('data-test', testText);
-                this.items[item][i].querySelector('h3').setAttribute('data-test', 'item-name');
-                this.items[item][i].querySelector('.price-container p').setAttribute('data-test', 'item-price');
+            [...this.items[item]].forEach((currItem, i)=> {
+                currItem.setAttribute('id', i);
+                currItem.setAttribute('data-test', testText);
+                currItem.querySelector('h3').setAttribute('data-test', 'item-name');
+                currItem.querySelector('.price-container p').setAttribute('data-test', 'item-price');
                 let firstItem = document.querySelectorAll(`#${item} .point-item`)
                 if (firstItem.length === 1) {
                     firstItem[0].classList.add('point-active-food')
                 }
-            }
-        }
+            })
+         }
     }
 }
 const model = {
