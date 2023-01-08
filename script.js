@@ -21,9 +21,16 @@ const view = {
     },
     $setupControllerState: function $setupControllerState() {
         for (let item of this.types) {
+            let testText = 'dish';
+            if (item === 'drink') {
+                testText='drink'
+            }
+            if (item === 'dessert') {
+                testText='dessert'
+            }
             for (let i in [...this.items[item]]) {
                 this.items[item][i].setAttribute('id', i);
-                this.items[item][i].setAttribute('data-test', 'dish');
+                this.items[item][i].setAttribute('data-test', testText);
                 this.items[item][i].querySelector('h3').setAttribute('data-test', 'item-name');
                 this.items[item][i].querySelector('.price-container p').setAttribute('data-test', 'item-price');
                 let firstItem = document.querySelectorAll(`#${item} .point-item`)
