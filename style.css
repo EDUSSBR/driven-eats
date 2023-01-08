@@ -75,6 +75,7 @@ button {
 
 .list-container:last-child {
     margin-bottom: 16px;
+    padding-right: 16px;
 }
 
 h2 {
@@ -92,14 +93,6 @@ h3 {
     padding: 18px 14px 13px 14px;
     margin-left: 16px;
     border-radius: 9px;
-}
-
-#dessert {
-    /* margin-bottom: 115px; */
-}
-
-.list-container:last-child {
-    padding-right: 16px;
 }
 
 section {
@@ -259,13 +252,15 @@ h4 {
 
     }
 
+    footer button:hover {
+        background-color: rgba(50, 183, 47, 0.8);
+    }
+
     footer button:disabled:hover {
         background-color: #cbcbcb;
     }
 
-    footer button:hover {
-        background-color: rgba(50, 183, 47, 0.8);
-    }
+
 
     .list-container {
         overflow-x: hidden;
@@ -294,6 +289,7 @@ h4 {
 
     }
 }
+
 @media (min-width: 780px) {
     main {
 

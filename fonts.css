@@ -1,7 +1,6 @@
 * {
 	font-family: 'Roboto', sans-serif;
 }
-
 h1 {
 	font-family: 'Righteous', sans-serif;
 	font-weight: 400;
@@ -9,13 +8,11 @@ h1 {
 	line-height: 55px;
 	letter-spacing: -0.012em;
 }
-
 header p {
 	font-weight: 400;
 	font-size: 18px;
 	line-height: 21px;
 }
-
 h2 {
 	font-family: 'Righteous', sans-serif;
 	font-weight: 400;
@@ -23,27 +20,23 @@ h2 {
 	line-height: 32px;
 	letter-spacing: 0.018em;
 }
-
 .list-item h3 {
 	font-weight: 700;
 	font-size: 16px;
 	line-height: 19px;
 
 }
-
-.list-item p:last-child {
-	font-weight: 400;
-	font-size: 16px;
-	line-height: 19px;
-}
-
 .list-item p {
 	font-weight: 300;
 	font-size: 15px;
 	line-height: 18px;
 }
-
 .price-container p {
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 19px;
+}
+.list-item p:last-child {
 	font-weight: 400;
 	font-size: 16px;
 	line-height: 19px;
@@ -56,14 +49,12 @@ button {
 	text-align: center;
 	letter-spacing: 0.018em;
 }
-
 h4 {
 	font-weight: 700;
 	font-size: 22px;
 	line-height: 26px;
 	text-align: center;
 }
-
 .order-item {
 	font-weight: 400;
 	font-size: 22px;
@@ -73,7 +64,6 @@ h4 {
 .order-item:last-child {
 	font-weight: 700;
 }
-
 #modalBox>button {
 	font-weight: 700;
 	font-size: 22px;

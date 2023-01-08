@@ -8,75 +8,56 @@
 	--description-gray: #A6A6A6;
 	--button-bg: #cbcbcb;
 }
-
 body {
 	background-color: var(--background-gray);
+	position: relative;
 }
-
 header {
 	background-color: var(--red);
 }
-
 footer {
 	background-color: var(--white);
 }
-
 h1 {
 	color: var(--white);
 }
-
 header p {
 	color: var(--white);
 }
-
 h2 {
 	color: var(--titles-gray);
 }
-
 .list-item {
 	background-color: var(--white);
 }
-
 .list-item h3 {
 	color: var(--titles-gray);
 
 }
-
-.list-item p:last-child {
-	color: var(--black)
-}
-
 .list-item p {
 	color: var(--description-gray);
 }
-
-button:disabled {
-	color: var(--white);
-	background-color: var(--button-bg);
-	border: 0px solid var(--button-bg);
+.price-container p {
+	color: black;
 }
-
+.list-item p:last-child {
+	color: var(--black)
+}
 button {
 	color: var(--white);
 	background-color: var(--green);
 	border: 0px solid var(--green);
 }
-
-
+button:disabled {
+	color: var(--white);
+	background-color: var(--button-bg);
+	border: 0px solid var(--button-bg);
+}
 ion-icon {
 	visibility: hidden;
 	display: none;
 	color: var(--green);
 }
-
-.price-container p {
-	color: black;
-}
-
-body {
-	position: relative;
-}
-
 .ModalBackground {
 	background-color: rgba(255, 255, 255, 0.9);
 }

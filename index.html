@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DrivenEats</title>
+    <link rel="shortcut icon" href="./imgs/favicon.svg" />
     <link rel="stylesheet" href="reset.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +26,7 @@
     <main>
         <section>
             <h2> Primeiro, seu prato</h2>
-            <div id='food' class="list-container">
+            <div id="food" class="list-container">
                 <div class="list-item">
                     <img src="./imgs/nigiri.jpg" alt="">
                     <h3>Combo nigiri</h3>
@@ -71,7 +72,7 @@
         </section>
         <section>
             <h2> Agora, sua bebida</h2>
-            <div id='drink' class="list-container">
+            <div id="drink" class="list-container">
                 <div class="list-item">
                     <img src="./imgs/chaverde.jpg" alt="">
                     <h3>Chá verde</h3>
@@ -108,7 +109,7 @@
         </section>
         <section>
             <h2> Por fim, sua sobremesa</h2>
-            <div id='dessert' class="list-container">
+            <div id="dessert" class="list-container">
                 <div class="list-item">
                     <img src="./imgs/cheesecakecereja.jpg" alt="">
                     <h3>Cheese Cake</h3>
@@ -146,25 +147,25 @@
         </section>
     </main>
     <footer>
-        <button data-test='order-btn' disabled onclick='sendOrder();'>
+        <button data-test="order-btn" disabled onclick="sendOrder();">
             Selecione os 3 itens <br /> para fechar o pedido
         </button>
     </footer>
 
-    <div id='modalBg' class="ModalBackground hideModal" onclick='closeModal();'> </div>
-    <div data-test="confirm-order-modal" id='modalBox' class="ModalBox hideModal">
+    <div id="modalBg" class="ModalBackground hideModal" onclick="closeModal();"> </div>
+    <div data-test="confirm-order-modal" id="modalBox" class="ModalBox hideModal">
         <h4>Confirme seu pedido</h4>
         <div class="order-container">
             <p class="order-item">
-                <span id='foodItem'></span>
-                <span id='foodPrice'></span>
+                <span id="foodItem"></span>
+                <span id="foodPrice"></span>
             </p>
-            <p class="order-item"><span id='drinkItem'></span> <span id='drinkPrice'></span></p>
-            <p class="order-item"><span id='dessertItem'></span> <span id='dessertPrice'></span></p>
-            <p class="order-item"><span>Total</span> <span id='totalPrice'></span></p>
+            <p class="order-item"><span id="drinkItem"></span> <span id="drinkPrice"></span></p>
+            <p class="order-item"><span id="dessertItem"></span> <span id="dessertPrice"></span></p>
+            <p class="order-item"><span>Total</span> <span id="totalPrice"></span></p>
         </div>
-        <button data-test="confirm-order-btn" onclick='sendWhatsAppMsg();'>Tudo certo, pode pedir!</button>
-        <button data-test="cancel-order-btn" onclick='closeModal();'>Cancelar</button>
+        <button data-test="confirm-order-btn" onclick="sendWhatsAppMsg();">Tudo certo, pode pedir!</button>
+        <button data-test="cancel-order-btn" onclick="closeModal();">Cancelar</button>
     </div>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
