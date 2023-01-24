@@ -1,47 +1,4 @@
-const view = {
-    getItemsByID: function getItemsByID(id) {
-        const typeOfItem = id.replace('#', '');
-        this.items[typeOfItem] = document.querySelectorAll(`${id} .list-item`);
-    },
-    toggleItemState: function toggleItemState(itemType, id) {
-        this.items[itemType][id].classList.toggle('checked');
-    },
-    activateButton: function activateButton() {
-        document.querySelector("button").removeAttribute('disabled');
-    },
-    checkButtonStatus: function checkButtonStatus() {
-        const disabledButton = document.querySelector("button:disabled");
-        return !!disabledButton;
-    },
-    setNewTextToButton: function setNewTextToButton() {
-        document.querySelector("button").innerText = "Fechar Pedido";
-    },
-    setInnerText: function setInnerText(id, text) {
-        document.getElementById(id).innerText = text;
-    },
-    setupControllerState: function setupControllerState() {
-        for (const item of this.types) {
-            let testText = 'dish';
-            if (item === 'drink') {
-                testText = 'drink';
-            }
-            if (item === 'dessert') {
-                testText = 'dessert';
-            }
-            [...this.items[item]].forEach((currItem, i) => {
-                currItem.setAttribute('id', i);
-                currItem.setAttribute('data-test', testText);
-                currItem.querySelector('h3').setAttribute('data-test', 'item-name');
-                currItem.querySelector('.price-container p').setAttribute('data-test', 'item-price');
-                const firstItem = document.querySelectorAll(`#${item} .point-item`);
-                if (firstItem.length === 1) {
-                    firstItem[0].classList.add('point-active-food');
-                }
-            });
-        }
-    }
-};
-const model = {
+export const model = {
     setupItems: function setupItems() {
         for (const item of this.types) {
             this.getItemsByID(`#${item}`);
@@ -127,46 +84,6 @@ Endereço: ${this.address}`;
         return `https://wa.me/5548988080753?text=${encodeURIComponent(message)}`;
     }
 };
-const itemsType = {
+export const itemsType = {
     types: ['food', 'drink', 'dessert']
 };
-const eventsItems = {
-    setupClickEvents: function setupClickEvents() {
-        for (const type of this.types) {
-            for (const item of this.items[type]) {
-                item.addEventListener('click', (e) => {
-                    const { id } = e.currentTarget;
-                    const oldID = this.selectedItemsID[type];
-                    if (oldID === id) {
-                        return;
-                    }
-                    if ((oldID !== null)) {
-                        this.clearCheckedItem(type, oldID);
-                    }
-                    this.setItemId(type, id);
-                    this.checkAllStatesForButtonActivation();
-                });
-            }
-        }
-    },
-};
-Object.assign(model, view, eventsItems, itemsType);
-const controller = Object.assign(Object.create(model), { selectedItemsID: { food: null, drink: null, dessert: null }, items: { food: {}, drink: {}, dessert: {} } });
-controller.setupItems(itemsType);
-function sendOrder() {
-    controller.setupModal();
-    let nome;
-    let address;
-    if (!controller.name || !controller.address) {
-        nome = prompt("Por favor, digite seu nome.");
-        address = prompt("Por favor, digite seu endereço.");
-        controller.setNameAndAddres(nome, address);
-    }
-}
-function closeModal() {
-    controller.setCloseModal();
-}
-function sendWhatsAppMsg() {
-    const { name, address } = controller;
-    window.location.href = controller.getSendOrderMessage(name, address);
-}
